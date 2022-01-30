@@ -19,6 +19,9 @@ func (app *App) Signup(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&request)
 
 	var newUser user.User = request.User
+	// NOTICE: Protect against DDoS attacks. Since this endpoint is exposed publicly, it is very easy launch DDoS attacks.
+	// Using strong capcha service is recomended.
+	// Rate limiting should also be implemented in tandem with captcha to reduce the impact
 
 	if err != nil {
 		log.Error().Msg("Bad Request body")
@@ -26,7 +29,18 @@ func (app *App) Signup(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// TODO: Implement
+	passwd, err := utils.HashPasswd(request.Password, &app.ArgonParams)
+	if err != nil {
+		log.Error().Msg(err.Error())
+		utils.InternalServerError(w, nil)
+		return
+	}
 
-	utils.OK(w, newUser)
+	user, err := user.NewUserRepository(&app.DB).Create(&newUser, passwd)
+	if err != nil {
+		log.Error().Msg(err.Error())
+		utils.BadRequest(w, err)
+		return
+	}
+	utils.OK(w, user)
 }
