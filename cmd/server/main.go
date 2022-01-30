@@ -1,9 +1,26 @@
 package main
 
 import (
-	"fmt"
+	"github.com/dineshdb/authnz/internal/api"
+	"github.com/rs/zerolog"
 )
 
 func main() {
-	fmt.Println("Hello, World!")
+
+	// TODO: Add configuration management. Use [12-factor application](12factor.net) guidelines for better maintainability of code
+
+	// Using structured logs for easier log analysis. The output is [ndjson](ndjson.org)
+	zerolog.SetGlobalLevel(zerolog.TraceLevel)
+
+	var config api.AppConfig = api.AppConfig{
+		Host:        "0.0.0.0",
+		Port:        8080,
+		DatabaseUrl: "./db.sqlite",
+	}
+
+	var app api.App = api.App{
+		Config: config,
+	}
+
+	app.HandleRequests()
 }
