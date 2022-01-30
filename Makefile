@@ -30,8 +30,15 @@ run: ## Run the code for development purpose
 start: build ## Build and run the code for production purpose
 	bin/server
 
+clean:
+	rm -rf db.sqlite
+
+rsa: ## Generate RSA Key
+	@openssl genpkey -algorithm RSA -out private.pem -pkeyopt rsa_keygen_bits:2048
+
 image: ## Build a docker image
 	docker build -t dineshdb/authnz .
 	
 up: ## Run docker image
 	docker run -p 8080:8080 dineshdb/authnz
+	docker run -p 8080:8080 -v `pwd`/private.pem:/app/private.pem dineshdb/authnz

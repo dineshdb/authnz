@@ -5,7 +5,9 @@ import (
 
 	"strconv"
 
+	"github.com/dineshdb/authnz/internal/auth"
 	"github.com/dineshdb/authnz/internal/middlewares"
+	"github.com/dineshdb/authnz/internal/utils"
 	"github.com/gorilla/mux"
 	"github.com/rs/zerolog/log"
 )
@@ -13,7 +15,9 @@ import (
 /// App is the struct for holding the global configuration and state for the
 /// application
 type App struct {
-	Config AppConfig
+	Config       AppConfig
+	ArgonParams  utils.ArgonParams
+	JWTValidator auth.JWTValidator
 }
 
 func (app *App) HandleRequests() {
@@ -29,6 +33,7 @@ func (app *App) HandleRequests() {
 
 	privateRouter := apiRouter.PathPrefix("/").Subrouter().StrictSlash(true)
 	// Register authentication middleware
+	privateRouter.Use(app.JWTValidator.AuthMiddleware)
 	privateRouter.HandleFunc("/profile/me", app.GetMyProfile)
 
 	publicRouter := apiRouter.PathPrefix("/public").Subrouter().StrictSlash(true)

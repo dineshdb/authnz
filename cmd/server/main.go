@@ -2,6 +2,8 @@ package main
 
 import (
 	"github.com/dineshdb/authnz/internal/api"
+	"github.com/dineshdb/authnz/internal/auth"
+	"github.com/dineshdb/authnz/internal/utils"
 	"github.com/rs/zerolog"
 )
 
@@ -19,7 +21,9 @@ func main() {
 	}
 
 	var app api.App = api.App{
-		Config: config,
+		Config:       config,
+		ArgonParams:  utils.DefaultArgonParams,
+		JWTValidator: auth.New("private.pem"),
 	}
 
 	app.HandleRequests()
