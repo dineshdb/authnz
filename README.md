@@ -5,10 +5,12 @@ Authorization and authentication. Learning go by writing a simple authentication
 ## Getting started
 
 Run ``make rsa run`` to generate a rsa key and then start the server directly using go.
-Run ``make build rsa start`` to build the binary, generate a rsa key and then start the build binary
-Run ``make image`` to build the docker image.
-Run ``make up`` to run the docker image. Note that you need to inject the private key to start the service.
 
+Run ``make build rsa start`` to build the binary, generate a rsa key and then start the build binary.
+
+Run ``make image`` to build the docker image.
+
+Run ``make up`` to run the docker image. Note that you need to inject the private key to start the service.
 
 ## API
 
