@@ -1,0 +1,40 @@
+@endpoint = http://localhost:8080
+@accessToken = eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDM1NjIyODMsImlhdCI6MTY0MzU1ODY4MywiaXNzIjoiQUNNRSBDb3JwIiwic3ViIjoiMSIsIlNjb3BlIjoicHJvZmlsZSJ9.X2eYpeoa9apVeM78zlQCEDD8iGeIURnidjtnkSJyfaJwNOI3-tLynZPr8XnH-Q-11kt73fVGz9CFUNJ5aGL6rXzWPxUc0tw2EU3dcIFwxMPoYIC2NNoL44KoHWbMJwm3FfM3JT7inWgbVLHTaJejAnneVtUhXboFuw4EyT70NPyZuagMny5KgJjCrC6ZLWUSU2UzeG06zY_YSsxntUfP1aJ9quTWM7G0WpvPy5ATfgLyxCNVy5dh1ABMu7Qvtu3olC_3NDmyTxGM0kictpoPoUMZYvD5d9pHu6zGAYmKQQwU2ldrFqZl5k_IMZuBSzp_1ZKzYdgk5WxaEmU-2ODpaw
+@refreshToken = bZpiF35MTHYqn4+oipd8INenArcsm5rTaHbsfZZZv8lXwqtSn6hy5BKCAzHSkWCZcqnBq6xSSjR2nDjFdDUwDzP5HvCZpDf5wmQyQlJOA4X5A/DiqhPZmVvEe6cEqjtOtm2ARvJrVt90x0+QtY0BnnYEe5DgqDCnF46HbqlsRKgm2RTiY6/6dl6P/1+mrN9TTFOCvgmdW3kILI7OR2wgJSYrPYxquHtU9XlSGFdOHhcET6vNt5scPjWwygogsXyOH674L3ofCuAJXEtVhvHVit7fZTg4zRQclLgrjYyIW75sWWVklVH/KqwqER3ySibgrBw18WH6OtXaTy4/+8/k5g==
+
+### Health
+GET {{endpoint}}/health/live
+
+### Login
+# You will need to register a user first before you can log in
+POST {{endpoint}}/api/v1/public/auth/login
+Content-Type: application/json
+
+{
+	"email": "user@example.com",
+	"password": "passwd"
+}
+
+### Refresh
+POST {{endpoint}}/api/v1/public/auth/refresh
+Content-Type: application/json
+
+{
+	"token": "{{refreshToken}}"
+} 
+
+### Signup
+POST {{endpoint}}/api/v1/public/auth/register
+Content-Type: application/json
+
+{
+	"user": {
+		"email": "user@example.com"
+	},
+	"password": "passwd"
+}
+
+### Profile
+GET {{endpoint}}/api/v1/profile/me
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}

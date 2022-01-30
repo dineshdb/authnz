@@ -1,0 +1,5 @@
+**/*.md
+Makefile
+Dockerfile
+.gitignore
+*.sqlite

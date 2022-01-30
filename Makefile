@@ -40,5 +40,4 @@ image: ## Build a docker image
 	docker build -t dineshdb/authnz .
 	
 up: ## Run docker image
-	docker run -p 8080:8080 dineshdb/authnz
 	docker run -p 8080:8080 -v `pwd`/private.pem:/app/private.pem dineshdb/authnz
