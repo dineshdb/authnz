@@ -14,6 +14,7 @@ vet: ## Vet the code
 	go vet ./...
 
 fmt: ## Format the code
+	@go mod tidy
 	@go list -f '{{.Dir}}' ./... | grep -v /vendor/ | xargs -L1 gofmt -l
 	@test -z $$(go list -f '{{.Dir}}' ./... | grep -v /vendor/ | xargs -L1 gofmt -l)
 
