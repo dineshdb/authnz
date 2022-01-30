@@ -65,6 +65,7 @@ func (j *JWTValidator) Generate(user user.User) (Token, error) {
 	// Use opaque token for refresh token
 	refreshTokenClaims := tokenClaims
 	refreshTokenClaims.Scope = "refresh"
+	refreshTokenClaims.ExpiresAt = time.Now().Add(j.RefreshTokenExpiryDuration).Unix()
 	marshalled, err := json.Marshal(refreshTokenClaims)
 	if err != nil {
 		return Token{}, err
